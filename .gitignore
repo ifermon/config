@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 
+
 # C extensions
 *.so
 
@@ -54,4 +55,6 @@ coverage.xml
 docs/_build/
 
 # PyBuilder
-target/
+target/ 
+
+gdoc.creds.json
