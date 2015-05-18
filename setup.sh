@@ -69,8 +69,72 @@ if [ "${ans}" != "n" ]; then
 
         echo -n "Updating system-wide default editor"
         _uf 'sudo update-alternatives --config editor'
-
-    else
-        echo "Okay, not much to do then."
     fi
 fi 
+
+SOURCE="profile"
+if [ -f ${SOURCE} ]; then
+
+    TARGET="${HOME}/.profile"
+    echo -n "Replace personal profile? [Y/n]:"
+    read ans
+    if [ "$ans" != 'n' ]; then
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Copying ${SOURCE} to ${TARGET}"
+        _uf "cp ${SOURCE} ${TARGET}"
+    fi
+
+    TARGET="/etc/skel/.profile"
+    echo -n "Put into /etc/skel/.profile? [Y/n]:"
+    read ans
+    if [ "$ans" != 'n' ]; then
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "sudo mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Copying ${SOURCE} to ${TARGET}"
+        _uf "sudo cp ${SOURCE} ${TARGET}"
+    fi
+fi
+
+
+SOURCE="bashrc"
+if [ -f ${SOURCE} ]; then
+
+    TARGET="${HOME}/.bashrc"
+    echo -n "Replace personal bashrc? [Y/n]:"
+    read ans
+    if [ "$ans" != 'n' ]; then
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Copying ${SOURCE} to ${TARGET}"
+        _uf "cp ${SOURCE} ${TARGET}"
+    fi
+
+    TARGET="/etc/skel/.bashrc"
+    echo -n "Put into /etc/skel/.bashrc? [Y/n]:"
+    read ans
+    if [ "$ans" != 'n' ]; then
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "sudo mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Copying ${SOURCE} to ${TARGET}"
+        _uf "sudo cp ${SOURCE} ${TARGET}"
+    fi
+fi
+
+echo "Setting up git preferences"
+_uf "git config --global core.editor 'vi'"
+_uf "git config --global user.email 'github-ifermon@sneakemail.com'"
+_uf "git config --global user.name 'Ivan'"
+
+# Get us back to normal
+echo "All done!"
+_uf :
+
