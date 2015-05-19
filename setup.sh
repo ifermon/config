@@ -17,6 +17,7 @@ read ans
 if [ "${ans}" != "n" ]; then
     _uf 'sudo apt-get update'
     _uf 'sudo apt-get upgrade'
+    _uf 'sudo apt-get dist-upgrade'
     _uf 'sudo apt-get update'
 fi
 
