@@ -130,11 +130,42 @@ if [ -f ${SOURCE} ]; then
     fi
 fi
 
-echo "Setting up git preferences"
-_uf "git config --global core.editor 'vi'"
-_uf "git config --global user.email 'github-ifermon@sneakemail.com'"
-_uf "git config --global user.name 'Ivan'"
+echo -n "Update git config? [Y/n]:"
+read ans
+if [ "$ans" != 'n' ]; then
+    _uf "git config --global core.editor 'vi'"
+    _uf "git config --global user.email 'github-ifermon@sneakemail.com'"
+    _uf "git config --global user.name 'Ivan'"
+fi
 
+echo -n "Update watchdog? [Y/n]:"
+read ans
+if [ "$ans" != 'n' ]; then
+    SOURCE="watchdog"
+    if [ -f ${SOURCE} ]; then
+
+        TARGET="/etc/default/watchdog"
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "sudo mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Linking ${SOURCE} to ${TARGET}"
+        _uf "sudo ln ${SOURCE} ${TARGET}"
+
+    fi
+    SOURCE="watchdog.conf"
+    if [ -f ${SOURCE} ]; then
+
+        TARGET="/etc/watchdog.conf"
+        if [ -f ${TARGET} ]; then
+            echo "Moving existing ${TARGET} to ${TARGET}.old"
+            _uf "sudo mv ${TARGET} ${TARGET}.old"
+        fi
+        echo "Linking ${SOURCE} to ${TARGET}"
+        _uf "sudo ln ${SOURCE} ${TARGET}"
+
+    fi
+fi
 # Get us back to normal
 echo "All done!"
 _uf :
