@@ -138,9 +138,11 @@ if [ "$ans" != 'n' ]; then
     _uf "git config --global user.name 'Ivan'"
 fi
 
-echo -n "Update watchdog? [Y/n]:"
+echo -n "Install watchdog? [Y/n]:"
 read ans
 if [ "$ans" != 'n' ]; then
+    echo "Installing watchdog"
+    _uf "sudo apt-get install watchdog"
     SOURCE="watchdog"
     if [ -f ${SOURCE} ]; then
 
