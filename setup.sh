@@ -15,6 +15,8 @@ echo "This may take a while"
 echo -n "Would you like to update / upgrade? [Y/n]:"
 read ans
 if [ "${ans}" != "n" ]; then
+    _uf 'sudo apt-get install rpi-update'
+    _uf 'sudo rpi-update'
     _uf 'sudo apt-get update'
     _uf 'sudo apt-get upgrade'
     _uf 'sudo apt-get dist-upgrade'
